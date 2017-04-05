@@ -1,6 +1,8 @@
 <?php
 
-class Circle implements FigureInterface
+namespace solid\SingleResponsability\Objects;
+
+class Circle
 {
     const PI = 3.14;
 
@@ -22,13 +24,5 @@ class Circle implements FigureInterface
     public function countArea()
     {
         return self::PI * pow($this->radius, 2);
-    }
-
-    /**
-     * @return float
-     */
-    public function countPerimeter()
-    {
-        return self::PI * $this->radius;
     }
 }
