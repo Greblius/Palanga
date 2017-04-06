@@ -1,8 +1,8 @@
 <?php
 
-namespace solid\SingleResponsability\Output;
+namespace solid\SingleResponsibility\Output;
 
-use solid\SingleResponsability\Calculators\AreaCalculator;
+use solid\SingleResponsibility\Calculators\AreaCalculator;
 
 class XmlOutput
 {

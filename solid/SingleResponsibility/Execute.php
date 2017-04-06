@@ -1,9 +1,9 @@
 <?php
 
-namespace solid\SingleResponsability;
+namespace solid\SingleResponsibility;
 
-use solid\SingleResponsability\Objects\Circle;
-use solid\SingleResponsability\Output\XmlOutput;
+use solid\SingleResponsibility\Objects\Circle;
+use solid\SingleResponsibility\Output\XmlOutput;
 
 class Execute
 {

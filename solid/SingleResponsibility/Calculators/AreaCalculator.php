@@ -1,8 +1,8 @@
 <?php
 
-namespace solid\SingleResponsability\Calculators;
+namespace solid\SingleResponsibility\Calculators;
 
-use solid\SingleResponsability\Objects\Circle;
+use solid\SingleResponsibility\Objects\Circle;
 
 class AreaCalculator
 {

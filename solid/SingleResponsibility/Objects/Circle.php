@@ -1,6 +1,6 @@
 <?php
 
-namespace solid\SingleResponsability\Objects;
+namespace solid\SingleResponsibility\Objects;
 
 class Circle
 {
