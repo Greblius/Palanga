@@ -2,6 +2,12 @@
 
 namespace solid\OpenClose;
 
+use solid\OpenClose\Calculators\AreaCalculator;
+use solid\OpenClose\Calculators\PerimeterCalculator;
+use solid\OpenClose\Objects\Circle;
+use solid\OpenClose\Objects\Rectangular;
+use solid\OpenClose\Objects\Triangle;
+
 class Execute
 {
     public function __construct()

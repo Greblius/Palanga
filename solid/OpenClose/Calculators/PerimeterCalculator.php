@@ -2,6 +2,8 @@
 
 namespace solid\OpenClose\Calculators;
 
+use solid\OpenClose\Objects\FigureInterface;
+
 class PerimeterCalculator
 {
     /** @var float */
