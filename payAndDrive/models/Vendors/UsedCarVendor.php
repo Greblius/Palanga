@@ -1,13 +1,11 @@
 <?php
 
-namespace payAndDrive\Vendors;
+namespace payAndDrive\models\Vendors;
 
-use payAndDrive\Vehicles\RacingCar;
-use payAndDrive\Vehicles\RoadLegalVehicle;
-use payAndDrive\Vehicles\SportsVehicle;
-use payAndDrive\Vehicles\UsedCar;
-use payAndDrive\Vehicles\Vehicle;
-use payAndDrive\Vehicles\WaterScooter;
+use payAndDrive\models\Vehicles\RacingCar;
+use payAndDrive\models\Vehicles\UsedCar;
+use payAndDrive\models\Vehicles\Vehicle;
+use payAndDrive\models\Vehicles\WaterScooter;
 
 class UsedCarVendor extends VehicleVendor
 {

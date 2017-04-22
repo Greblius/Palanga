@@ -1,8 +1,8 @@
 <?php
 
-namespace payAndDrive\Vendors;
+namespace payAndDrive\models\Vendors;
 
-use payAndDrive\Vehicles\NewCar;
+use payAndDrive\models\Vehicles\NewCar;
 
 class CarDealership extends VehicleVendor
 {

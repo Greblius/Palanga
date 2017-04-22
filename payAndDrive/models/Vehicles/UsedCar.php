@@ -1,17 +1,20 @@
 <?php
 
-namespace payAndDrive\Vehicles;
+namespace payAndDrive\models\Vehicles;
 
-class WreckedCar implements Vehicle, RoadLegalVehicle
+class UsedCar implements Vehicle, RoadLegalVehicle
 {
     /** @var string */
     private $brand;
 
-    /** @var  float */
+    /** @var float */
     private $price;
 
-    /** @var  boolean */
+    /** @var boolean */
     private $sold;
+
+    /** @var boolean */
+    private $hack;
 
     /**
      * @return bool
@@ -26,7 +29,13 @@ class WreckedCar implements Vehicle, RoadLegalVehicle
      */
     public function isDefective()
     {
-        return true;
+        $defective = true;
+
+        if ($this->hack) {
+            $defective = false;
+        }
+
+        return $defective;
     }
 
     /**
@@ -34,7 +43,11 @@ class WreckedCar implements Vehicle, RoadLegalVehicle
      */
     public function getOdometerValue()
     {
-        return 10000;
+        $odometerValue = 200000;
+        if ($this->hack) {
+            $odometerValue = 200000 * 0.5;
+        }
+        return $odometerValue;
     }
 
     /**
@@ -97,5 +110,10 @@ class WreckedCar implements Vehicle, RoadLegalVehicle
     public function setIsSold($sold)
     {
         $this->sold = $sold;
+    }
+
+    public function hackCarSystem()
+    {
+        $this->hack = true;
     }
 }

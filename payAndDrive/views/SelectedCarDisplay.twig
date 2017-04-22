@@ -1,0 +1,10 @@
+Hello!
+
+{% if selectedCarData %}
+    We are happy to inform you that our fancy algorithm found this car for you: <br>
+    Brand: {{ selectedCarData.brand }} <br>
+    Milage: {{ selectedCarData.milage }} <br>
+    Price: {{ selectedCarData.price }} <br>
+{% else %}
+    We are sorry but we could not find any car according to your requirments. Please try increasing the budget.
+{% endif %}

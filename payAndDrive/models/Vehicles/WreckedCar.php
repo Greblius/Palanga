@@ -1,33 +1,17 @@
 <?php
 
-namespace payAndDrive\Vehicles;
+namespace payAndDrive\models\Vehicles;
 
-class RacingCar implements Vehicle, SportsVehicle
+class WreckedCar implements Vehicle, RoadLegalVehicle
 {
     /** @var string */
     private $brand;
 
-    /** @var float */
+    /** @var  float */
     private $price;
 
     /** @var  boolean */
     private $sold;
-
-    /**
-     * @return int
-     */
-    public function getMotoHours()
-    {
-        return 100;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isExtendedSafety()
-    {
-        return true;
-    }
 
     /**
      * @return bool
@@ -42,7 +26,15 @@ class RacingCar implements Vehicle, SportsVehicle
      */
     public function isDefective()
     {
-        return false;
+        return true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOdometerValue()
+    {
+        return 10000;
     }
 
     /**
