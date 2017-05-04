@@ -1,7 +1,8 @@
 <?php
 
-namespace payAndDrive\Models\Vendors;
+namespace payAndDrive\models\Vendors;
 
+use payAndDrive\models\Clients\Client;
 use payAndDrive\models\Vehicles\Vehicle;
 
 abstract class VehicleVendor
@@ -20,16 +21,16 @@ abstract class VehicleVendor
 
     /**
      * @param Vehicle $vehicle
-     * @param array $owner
+     * @param Client $client
      * @return bool
      */
-    function checkIfVehicleIsGood($vehicle, $owner)
+    function checkIfVehicleIsGood($vehicle, $client)
     {
         $good = false;
 
-        if (!$vehicle->isSold() && $owner['budget'] >= $vehicle->getPrice()
-            && $owner['economical'] === $vehicle->isEconomical()
-            && $owner['defective'] === $vehicle->isDefective()) {
+        if (!$vehicle->isSold() && $client->getBudget() >= $vehicle->getPrice()
+            && $client->isEconomical() === $vehicle->isEconomical()
+            && $client->isDefective() === $vehicle->isDefective() && !$client->isHasCar()) {
             $good = true;
         }
 

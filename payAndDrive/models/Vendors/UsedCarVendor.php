@@ -2,17 +2,20 @@
 
 namespace payAndDrive\models\Vendors;
 
+use payAndDrive\models\EventManager;
 use payAndDrive\models\Vehicles\RacingCar;
 use payAndDrive\models\Vehicles\UsedCar;
 use payAndDrive\models\Vehicles\Vehicle;
 use payAndDrive\models\Vehicles\WaterScooter;
 
-class UsedCarVendor extends VehicleVendor
+class UsedCarVendor extends VehicleVendor implements VehicleVendorInterface
 {
     /** @var  Vehicle[] */
     private $vehicles;
 
-    public function __construct()
+    private $event;
+
+    public function __construct(EventManager $event)
     {
         $audi = new UsedCar();
         $audi->setBrand('Audi 100');
@@ -32,5 +35,20 @@ class UsedCarVendor extends VehicleVendor
         $waterScooter->setPrice(3000);
 
         $this->vehicles[] = $waterScooter;
+
+        $this->event = $event;
+    }
+
+    public function notifyWhenUsedVehicleSold()
+    {
+        $this->event->dispatch($this->getSoldCarEventName());
+    }
+
+    /**
+     * @return string
+     */
+    public function getSoldCarEventName()
+    {
+        return 'Used car sold';
     }
 }
