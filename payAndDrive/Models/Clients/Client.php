@@ -1,9 +1,12 @@
 <?php
 
-namespace payAndDrive\models\Clients;
+namespace payAndDrive\Models\Clients;
 
 class Client
 {
+    /** @var  string */
+    private $id;
+
     /** @var  string */
     private $name;
 
@@ -13,17 +16,11 @@ class Client
     /** @var  float */
     private $budget;
 
-    /** @var  int */
-    private $maxOdometerValue;
-
-    /** @var  bool */
-    private $defective;
-
-    /** @var  bool */
-    private $economical;
-
     /** @var  bool */
     private $hasCar;
+
+    /** @var  ClientRequirements */
+    private $carRequirements;
 
     /**
      * @return boolean
@@ -90,51 +87,19 @@ class Client
     }
 
     /**
-     * @return int
+     * @return ClientRequirements
      */
-    public function getMaxOdometerValue()
+    public function getCarRequirements()
     {
-        return $this->maxOdometerValue;
+        return $this->carRequirements;
     }
 
     /**
-     * @param int $maxOdometerValue
+     * @param ClientRequirements $carRequirements
      */
-    public function setMaxOdometerValue($maxOdometerValue)
+    public function setCarRequirements(ClientRequirements $carRequirements)
     {
-        $this->maxOdometerValue = $maxOdometerValue;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isDefective()
-    {
-        return $this->defective;
-    }
-
-    /**
-     * @param boolean $defective
-     */
-    public function setDefective($defective)
-    {
-        $this->defective = $defective;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function isEconomical()
-    {
-        return $this->economical;
-    }
-
-    /**
-     * @param mixed $economical
-     */
-    public function setEconomical($economical)
-    {
-        $this->economical = $economical;
+        $this->carRequirements = $carRequirements;
     }
 
     /**
@@ -146,13 +111,13 @@ class Client
      * @param $defective
      * @param $economical
      */
-    public function __construct($name, $email, $budget, $odometer, $defective, $economical)
+    public function __construct($id, $name, $email, $budget)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->budget = $budget;
-        $this->maxOdometerValue = $odometer;
-        $this->defective = $defective;
-        $this->economical = $economical;
     }
+
+
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace payAndDrive\models\Vehicles;
+namespace payAndDrive\Models\Vehicles;
 
-class UsedCar implements Vehicle, RoadLegalVehicle
+class RacingCar implements Vehicle, SportsVehicle
 {
     /** @var string */
     private $brand;
@@ -10,11 +10,24 @@ class UsedCar implements Vehicle, RoadLegalVehicle
     /** @var float */
     private $price;
 
-    /** @var boolean */
+    /** @var  boolean */
     private $sold;
 
-    /** @var boolean */
-    private $hack;
+    /**
+     * @return int
+     */
+    public function getMotoHours()
+    {
+        return 100;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExtendedSafety()
+    {
+        return true;
+    }
 
     /**
      * @return bool
@@ -29,25 +42,7 @@ class UsedCar implements Vehicle, RoadLegalVehicle
      */
     public function isDefective()
     {
-        $defective = true;
-
-        if ($this->hack) {
-            $defective = false;
-        }
-
-        return $defective;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOdometerValue()
-    {
-        $odometerValue = 200000;
-        if ($this->hack) {
-            $odometerValue = 200000 * 0.5;
-        }
-        return $odometerValue;
+        return false;
     }
 
     /**
@@ -110,10 +105,5 @@ class UsedCar implements Vehicle, RoadLegalVehicle
     public function setIsSold($sold)
     {
         $this->sold = $sold;
-    }
-
-    public function hackCarSystem()
-    {
-        $this->hack = true;
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace payAndDrive\models\Vehicles;
+namespace payAndDrive\Models\Vehicles;
 
-class NewCar implements Vehicle, RoadLegalVehicle
+class WreckedCar implements Vehicle, RoadLegalVehicle
 {
-    /** @var  string */
+    /** @var string */
     private $brand;
 
     /** @var  float */
@@ -18,7 +18,7 @@ class NewCar implements Vehicle, RoadLegalVehicle
      */
     public function isNewVehicle()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -26,7 +26,7 @@ class NewCar implements Vehicle, RoadLegalVehicle
      */
     public function isDefective()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -34,7 +34,7 @@ class NewCar implements Vehicle, RoadLegalVehicle
      */
     public function getOdometerValue()
     {
-        return 0;
+        return 10000;
     }
 
     /**
@@ -42,7 +42,7 @@ class NewCar implements Vehicle, RoadLegalVehicle
      */
     public function isEconomical()
     {
-        return true;
+        return false;
     }
 
     /**

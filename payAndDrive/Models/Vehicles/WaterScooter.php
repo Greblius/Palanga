@@ -1,13 +1,13 @@
 <?php
 
-namespace payAndDrive\models\Vehicles;
+namespace payAndDrive\Models\Vehicles;
 
-class RacingCar implements Vehicle, SportsVehicle
+class WaterScooter implements Vehicle, SportsVehicle
 {
     /** @var string */
     private $brand;
 
-    /** @var float */
+    /** @var  float */
     private $price;
 
     /** @var  boolean */
@@ -18,7 +18,7 @@ class RacingCar implements Vehicle, SportsVehicle
      */
     public function getMotoHours()
     {
-        return 100;
+        return 200;
     }
 
     /**
@@ -26,7 +26,7 @@ class RacingCar implements Vehicle, SportsVehicle
      */
     public function isExtendedSafety()
     {
-        return true;
+        return false;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace payAndDrive\models\Vehicles;
+namespace payAndDrive\Models\Vehicles;
 
 interface SportsVehicle
 {

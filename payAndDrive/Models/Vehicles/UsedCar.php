@@ -1,33 +1,20 @@
 <?php
 
-namespace payAndDrive\models\Vehicles;
+namespace payAndDrive\Models\Vehicles;
 
-class WaterScooter implements Vehicle, SportsVehicle
+class UsedCar implements Vehicle, RoadLegalVehicle
 {
     /** @var string */
     private $brand;
 
-    /** @var  float */
+    /** @var float */
     private $price;
 
-    /** @var  boolean */
+    /** @var boolean */
     private $sold;
 
-    /**
-     * @return int
-     */
-    public function getMotoHours()
-    {
-        return 200;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isExtendedSafety()
-    {
-        return false;
-    }
+    /** @var boolean */
+    private $hack;
 
     /**
      * @return bool
@@ -42,7 +29,25 @@ class WaterScooter implements Vehicle, SportsVehicle
      */
     public function isDefective()
     {
-        return false;
+        $defective = true;
+
+        if ($this->hack) {
+            $defective = false;
+        }
+
+        return $defective;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOdometerValue()
+    {
+        $odometerValue = 200000;
+        if ($this->hack) {
+            $odometerValue = 200000 * 0.5;
+        }
+        return $odometerValue;
     }
 
     /**
@@ -105,5 +110,10 @@ class WaterScooter implements Vehicle, SportsVehicle
     public function setIsSold($sold)
     {
         $this->sold = $sold;
+    }
+
+    public function hackCarSystem()
+    {
+        $this->hack = true;
     }
 }

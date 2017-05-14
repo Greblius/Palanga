@@ -1,9 +1,9 @@
 <?php
 
-namespace payAndDrive\models\Vendors;
+namespace payAndDrive\Models\Vendors;
 
-use payAndDrive\models\Clients\Client;
-use payAndDrive\models\Vehicles\Vehicle;
+use payAndDrive\Models\Clients\Client;
+use payAndDrive\Models\Vehicles\Vehicle;
 
 abstract class VehicleVendor
 {
@@ -29,8 +29,8 @@ abstract class VehicleVendor
         $good = false;
 
         if (!$vehicle->isSold() && $client->getBudget() >= $vehicle->getPrice()
-            && $client->isEconomical() === $vehicle->isEconomical()
-            && $client->isDefective() === $vehicle->isDefective() && !$client->isHasCar()) {
+            && $client->getCarRequirements()->isEconomical() === $vehicle->isEconomical()
+            && $client->getCarRequirements()->isDefective() === $vehicle->isDefective() && !$client->isHasCar()) {
             $good = true;
         }
 
