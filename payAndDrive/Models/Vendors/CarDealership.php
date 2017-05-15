@@ -2,6 +2,7 @@
 
 namespace payAndDrive\Models\Vendors;
 
+use payAndDrive\Models\Events\EventDispatcher;
 use payAndDrive\Models\Vehicles\NewCar;
 
 class CarDealership extends VehicleVendor
@@ -11,8 +12,10 @@ class CarDealership extends VehicleVendor
     /** @var NewCar[] */
     private $cars;
 
-    public function __construct()
+    public function __construct(EventDispatcher $eventDispatcher)
     {
+        parent::__construct($eventDispatcher);
+
         $bmw = new NewCar();
         $bmw->setBrand('BMW');
         $bmw->setPrice(50000 * self::DEALERSHIP_PRICE_MULTIPLIER);

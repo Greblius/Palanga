@@ -5,9 +5,7 @@ namespace payAndDrive\Controllers;
 use payAndDrive\Models\Clients\Client;
 use payAndDrive\Models\Clients\ClientManager;
 use payAndDrive\Models\Clients\ClientRequirements;
-use payAndDrive\Models\Events\ClientBoughtCarEvent;
 use payAndDrive\Models\Events\EventDispatcher;
-use payAndDrive\Models\Events\SoldCarEvent;
 use payAndDrive\Models\Vehicles\Vehicle;
 use payAndDrive\Models\Vendors\CarDealership;
 use payAndDrive\Models\Vendors\UsedCarVendor;
@@ -15,9 +13,6 @@ use payAndDrive\Models\Vendors\VehicleVendor;
 
 class CarSelectorController
 {
-    /** @var  EventDispatcher */
-    private $eventDispatcher;
-
     /** @var  ClientManager */
     private $clientManager;
 
@@ -29,10 +24,10 @@ class CarSelectorController
 
     public function __construct()
     {
-        $this->eventDispatcher = new EventDispatcher();
+        $eventDispatcher = new EventDispatcher();
         $this->clientManager = $this->getClientManager();
-        $this->newCarsDealer = new CarDealership();
-        $this->usedCarVendor = new UsedCarVendor();
+        $this->newCarsDealer = new CarDealership($eventDispatcher);
+        $this->usedCarVendor = new UsedCarVendor($eventDispatcher);
     }
 
     public function getRightCarsForUser()
@@ -42,9 +37,6 @@ class CarSelectorController
         if (empty($foundCarData)) {
             $foundCarData = $this->selectCarFromList($this->usedCarVendor);
         }
-
-        $this->eventDispatcher->dispatch('carSold');
-        $this->eventDispatcher->dispatch('newClientCar');
 
         return ['selectedCarData' => $foundCarData];
     }
@@ -63,14 +55,13 @@ class CarSelectorController
     }
 
     /**
-     * @param VehicleVendor|VehicleVendorInterface $dealer
-     * @param $clientData
-     * @param EventManager $eventManager
+     * @param VehicleVendor $dealer
      * @return array
      */
     private function selectCarFromList($dealer)
     {
         $foundCarData = [];
+        /** @var Vehicle $vehicle */
         foreach ($dealer->getVehicleList() as $vehicle) {
             /** @var Client $client */
             foreach ($this->clientManager->getClients() as $client) {
@@ -78,32 +69,11 @@ class CarSelectorController
                     $foundCarData = $this->getCarData($vehicle);
                     $vehicle->setIsSold(true);
                     $client->setHasCar(true);
-
-                    $this->soldCarListener($vehicle);
-                    $this->informClientListener($client, $vehicle);
+                    $dealer->informClientAboutPurchase($client, $vehicle);
                 }
             }
         }
         return $foundCarData;
-    }
-
-    /**
-     * @param Client $client
-     * @param Vehicle $vehicle
-     */
-    private function informClientListener(Client $client, Vehicle $vehicle)
-    {
-        $newCarInformEvent = new ClientBoughtCarEvent($client->getName(), $client->getEmail(), $vehicle->getBrand());
-        $this->eventDispatcher->addListener($newCarInformEvent, 'informClientAboutPurchasedCar', 'newClientCar');
-    }
-
-    /**
-     * @param Vehicle $vehicle
-     */
-    private function soldCarListener(Vehicle $vehicle)
-    {
-        $carSoldEvent = new SoldCarEvent($vehicle->getBrand(), $vehicle->getPrice());
-        $this->eventDispatcher->addListener($carSoldEvent, 'informAboutSoldCar', 'carSold');
     }
 
     /**

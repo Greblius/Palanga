@@ -2,23 +2,80 @@
 
 namespace payAndDrive\Models\Vehicles;
 
-interface Vehicle
+use payAndDrive\Models\Events\EventDispatcher;
+use payAndDrive\Models\Events\SoldCarEvent;
+
+abstract class Vehicle implements VehicleProperties
 {
-    public function isNewVehicle();
+    /** @var  boolean */
+    private $sold;
 
-    public function isDefective();
+    /** @var  EventDispatcher */
+    private $eventDispatcher;
 
-    public function isEconomical();
+    /** @var  string */
+    private $brand;
 
-    public function getPrice();
+    /** @var  float */
+    private $price;
 
-    public function getBrand();
+    /**
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
 
-    public function setBrand($brand);
+    /**
+     * @param float $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
 
-    public function setPrice($price);
+    /**
+     * @return string
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
 
-    public function isSold();
+    /**
+     * @param string $brand
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    }
 
-    public function setIsSold($sold);
+    public function __construct()
+    {
+        $this->eventDispatcher = new EventDispatcher();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSold()
+    {
+        $sold = false;
+
+        if (null !== $this->sold) {
+            $sold = $this->sold;
+        }
+
+        return $sold;
+    }
+
+    /**
+     * @param bool $sold
+     */
+    public function setIsSold($sold)
+    {
+        $this->eventDispatcher->dispatch('informAboutSoldCar', new SoldCarEvent($this->getBrand(), $this->getPrice()));
+        $this->sold = $sold;
+    }
 }
