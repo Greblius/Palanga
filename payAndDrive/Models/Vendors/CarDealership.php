@@ -4,6 +4,7 @@ namespace payAndDrive\Models\Vendors;
 
 use payAndDrive\Models\Events\EventDispatcher;
 use payAndDrive\Models\Vehicles\NewCar;
+use payAndDrive\Models\Vehicles\VehicleFactory;
 
 class CarDealership extends VehicleVendor
 {
@@ -16,17 +17,15 @@ class CarDealership extends VehicleVendor
     {
         parent::__construct($eventDispatcher);
 
-        $bmw = new NewCar();
-        $bmw->setBrand('BMW');
-        $bmw->setPrice(50000 * self::DEALERSHIP_PRICE_MULTIPLIER);
-
-        $toyota = new NewCar();
-        $toyota->setBrand('Toyota');
-        $toyota->setPrice(17000 * self::DEALERSHIP_PRICE_MULTIPLIER);
+        $bmw = VehicleFactory::create('NewCar', 'BMW', 50000 * self::DEALERSHIP_PRICE_MULTIPLIER);
+        $toyota = VehicleFactory::create('NewCar', 'Toyota', 17000 * self::DEALERSHIP_PRICE_MULTIPLIER);
 
         $this->cars = [$bmw, $toyota];
     }
 
+    /**
+     * @return NewCar[]
+     */
     public function getVehicleList()
     {
         return $this->cars;

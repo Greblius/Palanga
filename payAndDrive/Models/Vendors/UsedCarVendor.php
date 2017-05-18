@@ -3,10 +3,8 @@
 namespace payAndDrive\Models\Vendors;
 
 use payAndDrive\Models\Events\EventDispatcher;
-use payAndDrive\Models\Vehicles\RacingCar;
-use payAndDrive\Models\Vehicles\UsedCar;
 use payAndDrive\Models\Vehicles\Vehicle;
-use payAndDrive\Models\Vehicles\WaterScooter;
+use payAndDrive\Models\Vehicles\VehicleFactory;
 
 class UsedCarVendor extends VehicleVendor
 {
@@ -17,23 +15,10 @@ class UsedCarVendor extends VehicleVendor
     {
         parent::__construct($eventDispatcher);
 
-        $audi = new UsedCar();
-        $audi->setBrand('Audi 100');
-        $audi->setPrice(5000);
-        $audi->hackCarSystem();
+        $audi = VehicleFactory::create('UsedCar', 'Audi 100', 5000, true);
+        $porsche = VehicleFactory::create('RacingCar', 'Porsche', 100000);
+        $waterScooter = VehicleFactory::create('WaterScooter', 'Bombardier', 3000);
 
-        $this->vehicles[] = $audi;
-
-        $porsche = new RacingCar();
-        $porsche->setPrice(100000);
-        $porsche->setBrand('Porsche');
-
-        $this->vehicles[] = $porsche;
-
-        $waterScooter = new WaterScooter();
-        $waterScooter->setBrand('Bombardier');
-        $waterScooter->setPrice(3000);
-
-        $this->vehicles[] = $waterScooter;
+        $this->vehicles = [$audi, $porsche, $waterScooter];
     }
 }

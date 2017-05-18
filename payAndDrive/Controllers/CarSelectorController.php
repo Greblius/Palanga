@@ -3,6 +3,7 @@
 namespace payAndDrive\Controllers;
 
 use payAndDrive\Models\Clients\Client;
+use payAndDrive\Models\Clients\ClientFactory;
 use payAndDrive\Models\Clients\ClientManager;
 use payAndDrive\Models\Clients\ClientRequirements;
 use payAndDrive\Models\Events\EventDispatcher;
@@ -83,12 +84,8 @@ class CarSelectorController
     {
         $clientCollection = new ClientManager();
 
-        $clientJonas = new Client('1', 'Jonas', 'jonas@gmail.com', 70000);
-        $jonasRequires = new ClientRequirements('1', 0, false, false);
-        $clientJonas->setCarRequirements($jonasRequires);
-        $clientPetras = new Client('2', 'Petras', 'jonas@gmail.com', 10000);
-        $petrasRequires = new ClientRequirements('2', 100000, true, true);
-        $clientPetras->setCarRequirements($petrasRequires);
+        $clientJonas = ClientFactory::create('1', 'Jonas', 'jonas@gmail.com', 70000, 0, false, false);
+        $clientPetras = ClientFactory::create('2', 'Petras', 'jonas@gmail.com', 10000, 100000, true, true);
 
         $clientCollection->addClient($clientJonas);
         $clientCollection->addClient($clientPetras);
