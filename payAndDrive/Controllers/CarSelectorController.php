@@ -9,6 +9,7 @@ use payAndDrive\Models\Clients\ClientRequirements;
 use payAndDrive\Models\Events\EventDispatcher;
 use payAndDrive\Models\Vehicles\Vehicle;
 use payAndDrive\Models\Vendors\CarDealership;
+use payAndDrive\Models\Vendors\SellCarCommand;
 use payAndDrive\Models\Vendors\UsedCarVendor;
 use payAndDrive\Models\Vendors\VehicleVendor;
 
@@ -43,19 +44,6 @@ class CarSelectorController
     }
 
     /**
-     * @param Vehicle $vehicle
-     * @return array
-     */
-    private function getCarData($vehicle)
-    {
-        return [
-            'brand' => $vehicle->getBrand(),
-            'price' => $vehicle->getPrice(),
-            'milage' => $vehicle->getOdometerValue()
-        ];
-    }
-
-    /**
      * @param VehicleVendor $dealer
      * @return array
      */
@@ -67,10 +55,9 @@ class CarSelectorController
             /** @var Client $client */
             foreach ($this->clientManager->getClients() as $client) {
                 if ($dealer->checkIfVehicleIsGood($vehicle, $client)) {
-                    $foundCarData = $this->getCarData($vehicle);
-                    $vehicle->setIsSold(true);
-                    $client->setCarBrand($vehicle->getBrand());
-                    $dealer->informClientAboutPurchase($client, $vehicle);
+                    $sellCarCommand = new SellCarCommand($dealer, $client, $vehicle);
+                    $sellCarCommand->execute();
+                    $foundCarData = $dealer->getPurchasedVehicleData();
                 }
             }
         }

@@ -15,6 +15,9 @@ abstract class VehicleVendor
     /** @var  EventDispatcher */
     private $eventDispatcher;
 
+    /** @var  Vehicle */
+    private $purchasedVehicle;
+
     /**
      * VehicleVendor constructor.
      * @param EventDispatcher $eventDispatcher
@@ -56,6 +59,32 @@ abstract class VehicleVendor
         }
 
         return $good;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPurchasedVehicleData()
+    {
+        $vehicleData = [];
+
+        if (null !== $this->purchasedVehicle) {
+            $vehicleData = [
+                'brand' => $this->purchasedVehicle->getBrand(),
+                'price' => $this->purchasedVehicle->getPrice(),
+                'milage' => $this->purchasedVehicle->getOdometerValue()
+            ];
+        }
+
+        return $vehicleData;
+    }
+
+    /**
+     * @param Vehicle $vehicle
+     */
+    public function setPurchasedVehicle(Vehicle $vehicle)
+    {
+        $this->purchasedVehicle = $vehicle;
     }
 
     /**
