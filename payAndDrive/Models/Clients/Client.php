@@ -17,7 +17,7 @@ class Client
     private $budget;
 
     /** @var  bool */
-    private $hasCar;
+    private $carBrand;
 
     /** @var  ClientRequirements */
     private $carRequirements;
@@ -27,15 +27,21 @@ class Client
      */
     public function isHasCar()
     {
-        return $this->hasCar;
+        $hasCar = false;
+
+        if (null !== $this->carBrand) {
+            $hasCar = true;
+        }
+
+        return $hasCar;
     }
 
     /**
-     * @param boolean $hasCar
+     * @param string $carBrand
      */
-    public function setHasCar($hasCar)
+    public function setCarBrand($carBrand)
     {
-        $this->hasCar = $hasCar;
+        $this->carBrand = $carBrand;
     }
 
     /**

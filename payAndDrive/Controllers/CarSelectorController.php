@@ -69,7 +69,7 @@ class CarSelectorController
                 if ($dealer->checkIfVehicleIsGood($vehicle, $client)) {
                     $foundCarData = $this->getCarData($vehicle);
                     $vehicle->setIsSold(true);
-                    $client->setHasCar(true);
+                    $client->setCarBrand($vehicle->getBrand());
                     $dealer->informClientAboutPurchase($client, $vehicle);
                 }
             }
