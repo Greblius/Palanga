@@ -2,6 +2,8 @@
 
 namespace payAndDrive\Models\Vehicles;
 
+use payAndDrive\Models\Clients\Client;
+use payAndDrive\Models\Events\ClientBoughtCarEvent;
 use payAndDrive\Models\Events\EventDispatcher;
 use payAndDrive\Models\Events\SoldCarEvent;
 
@@ -18,6 +20,9 @@ abstract class Vehicle implements VehicleProperties
 
     /** @var  float */
     private $price;
+
+    /** @var  string */
+    private $ownerId;
 
     /**
      * @return float
@@ -71,11 +76,22 @@ abstract class Vehicle implements VehicleProperties
     }
 
     /**
-     * @param bool $sold
+     * @param Client $client
      */
-    public function setIsSold($sold)
+    public function setIsSold($client)
     {
+        $this->ownerId = $client->getId();
         $this->eventDispatcher->dispatch('informAboutSoldCar', new SoldCarEvent($this->getBrand(), $this->getPrice()));
-        $this->sold = $sold;
+        $this->eventDispatcher->dispatch('informClientAboutPurchasedCar', new ClientBoughtCarEvent($client->getName(), $client->getEmail(), $this->getBrand()));
+        $this->sold = true;
+    }
+
+    /**
+     * @param Client $client
+     * @param Vehicle $vehicle
+     */
+    public function informClientAboutPurchase(Client $client, Vehicle $vehicle)
+    {
+
     }
 }

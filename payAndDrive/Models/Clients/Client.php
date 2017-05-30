@@ -2,6 +2,8 @@
 
 namespace payAndDrive\Models\Clients;
 
+use payAndDrive\Models\Vehicles\Vehicle;
+
 class Client
 {
     /** @var  string */
@@ -16,32 +18,15 @@ class Client
     /** @var  float */
     private $budget;
 
-    /** @var  bool */
-    private $carBrand;
-
     /** @var  ClientRequirements */
     private $carRequirements;
 
     /**
-     * @return boolean
+     * @return string
      */
-    public function isHasCar()
+    public function getId()
     {
-        $hasCar = false;
-
-        if (null !== $this->carBrand) {
-            $hasCar = true;
-        }
-
-        return $hasCar;
-    }
-
-    /**
-     * @param string $carBrand
-     */
-    public function setCarBrand($carBrand)
-    {
-        $this->carBrand = $carBrand;
+        return $this->id;
     }
 
     /**
@@ -113,9 +98,6 @@ class Client
      * @param $name
      * @param $email
      * @param $budget
-     * @param $odometer
-     * @param $defective
-     * @param $economical
      */
     public function __construct($id, $name, $email, $budget)
     {
@@ -124,6 +106,4 @@ class Client
         $this->email = $email;
         $this->budget = $budget;
     }
-
-
 }

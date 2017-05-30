@@ -27,9 +27,7 @@ class SellCarCommand implements VendorCommand
     {
         if ($this->dealer->checkIfVehicleIsGood($this->vehicle, $this->client)) {
             $this->dealer->setPurchasedVehicle($this->vehicle);
-            $this->vehicle->setIsSold(true);
-            $this->client->setCarBrand($this->vehicle->getBrand());
-            $this->dealer->informClientAboutPurchase($this->client, $this->vehicle);
+            $this->vehicle->setIsSold($this->client);
         }
     }
 }

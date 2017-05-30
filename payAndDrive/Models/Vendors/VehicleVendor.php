@@ -54,7 +54,7 @@ abstract class VehicleVendor
 
         if (!$vehicle->isSold() && $client->getBudget() >= $vehicle->getPrice()
             && $client->getCarRequirements()->isEconomical() === $vehicle->isEconomical()
-            && $client->getCarRequirements()->isDefective() === $vehicle->isDefective() && !$client->isHasCar()) {
+            && $client->getCarRequirements()->isDefective() === $vehicle->isDefective()) {
             $good = true;
         }
 
@@ -85,17 +85,5 @@ abstract class VehicleVendor
     public function setPurchasedVehicle(Vehicle $vehicle)
     {
         $this->purchasedVehicle = $vehicle;
-    }
-
-    /**
-     * @param Client $client
-     * @param Vehicle $vehicle
-     */
-    public function informClientAboutPurchase(Client $client, Vehicle $vehicle)
-    {
-        $this->eventDispatcher->dispatch(
-            'informClientAboutPurchasedCar',
-            new ClientBoughtCarEvent($client->getName(), $client->getEmail(), $vehicle->getBrand())
-        );
     }
 }

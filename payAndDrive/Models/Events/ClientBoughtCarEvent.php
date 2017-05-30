@@ -13,11 +13,11 @@ class ClientBoughtCarEvent extends Event
     /** @var  string */
     private $vehicleBrand;
 
-    public function __construct($clientName, $clientEmail, $vehileBrand)
+    public function __construct($clientName, $clientEmail, $vehicleBrand)
     {
         $this->clientName = $clientName;
         $this->clientEmail = $clientEmail;
-        $this->vehicleBrand = $vehileBrand;
+        $this->vehicleBrand = $vehicleBrand;
     }
 
 
