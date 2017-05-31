@@ -5,7 +5,6 @@ namespace payAndDrive\Controllers;
 use payAndDrive\Models\Clients\Client;
 use payAndDrive\Models\Clients\ClientFactory;
 use payAndDrive\Models\Clients\ClientManager;
-use payAndDrive\Models\Clients\ClientRequirements;
 use payAndDrive\Models\Events\EventDispatcher;
 use payAndDrive\Models\Vehicles\Vehicle;
 use payAndDrive\Models\Vendors\CarDealership;

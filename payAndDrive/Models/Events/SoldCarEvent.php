@@ -2,7 +2,7 @@
 
 namespace payAndDrive\Models\Events;
 
-class SoldCarEvent extends Event
+class SoldCarEvent
 {
     /** @var  string */
     private $carBrand;
@@ -10,14 +10,50 @@ class SoldCarEvent extends Event
     /** @var  float */
     private $carPrice;
 
-    public function __construct($carBrand, $carPrice)
+    /** @var  string */
+    private $clientName;
+
+    /** @var  string */
+    private $clientEmail;
+
+    /**
+     * @return string
+     */
+    public function getCarBrand()
+    {
+        return $this->carBrand;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCarPrice()
+    {
+        return $this->carPrice;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientName()
+    {
+        return $this->clientName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientEmail()
+    {
+        return $this->clientEmail;
+    }
+
+    public function __construct($carBrand, $carPrice, $clientName, $clientEmail)
     {
         $this->carBrand = $carBrand;
         $this->carPrice = $carPrice;
+        $this->clientName = $clientName;
+        $this->clientEmail = $clientEmail;
     }
 
-    public function informAboutSoldCar()
-    {
-        echo 'Car brand: ' . $this->carBrand . ' sold for: ' . $this->carPrice;
-    }
 }

@@ -5,6 +5,7 @@ namespace payAndDrive\Models\Vendors;
 use payAndDrive\Models\Clients\Client;
 use payAndDrive\Models\Events\ClientBoughtCarEvent;
 use payAndDrive\Models\Events\EventDispatcher;
+use payAndDrive\Models\Events\SoldCarEvent;
 use payAndDrive\Models\Vehicles\Vehicle;
 
 abstract class VehicleVendor
@@ -81,9 +82,12 @@ abstract class VehicleVendor
 
     /**
      * @param Vehicle $vehicle
+     * @param Client $client
      */
-    public function setPurchasedVehicle(Vehicle $vehicle)
+    public function setPurchasedVehicle(Vehicle $vehicle, Client $client)
     {
         $this->purchasedVehicle = $vehicle;
+        $event = new SoldCarEvent($vehicle->getBrand(), $vehicle->getPrice(), $client->getEmail(), $client->getName());
+        $this->eventDispatcher->informClientAboutNewCar($event);
     }
 }

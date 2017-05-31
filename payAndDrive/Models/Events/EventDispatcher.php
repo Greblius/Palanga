@@ -5,11 +5,14 @@ namespace payAndDrive\Models\Events;
 class EventDispatcher
 {
     /**
-     * @param $eventName
-     * @param Event $event
+     * @param SoldCarEvent $event
      */
-    public function dispatch($eventName, Event $event)
+    public function informClientAboutNewCar(SoldCarEvent $event)
     {
-        $event->{$eventName};
+        mail(
+            $event->getClientEmail(),
+            'Congratulations ' . $event->getClientName() . ' you have bought yourself a ' . $event->getCarBrand() . '!!!',
+            ''
+        );
     }
 }
