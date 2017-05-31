@@ -88,6 +88,6 @@ abstract class VehicleVendor
     {
         $this->purchasedVehicle = $vehicle;
         $event = new SoldCarEvent($vehicle->getBrand(), $vehicle->getPrice(), $client->getEmail(), $client->getName());
-        $this->eventDispatcher->informClientAboutNewCar($event);
+        $this->eventDispatcher->dispatch('informClientAboutNewCar', $event);
     }
 }

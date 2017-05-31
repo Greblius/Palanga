@@ -4,6 +4,11 @@ namespace payAndDrive\Models\Events;
 
 class EventDispatcher
 {
+    public function dispatch($functionName, $event)
+    {
+        $this->{$functionName}($event);
+    }
+
     /**
      * @param SoldCarEvent $event
      */
