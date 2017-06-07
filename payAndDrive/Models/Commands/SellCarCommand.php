@@ -1,11 +1,12 @@
 <?php
 
-namespace payAndDrive\Models\Vendors;
+namespace payAndDrive\Models\Commands;
 
 use payAndDrive\Models\Clients\Client;
 use payAndDrive\Models\Vehicles\Vehicle;
+use payAndDrive\Models\Vendors\VehicleVendor;
 
-class SellCarCommand implements VendorCommand
+class SellCarCommand implements Command
 {
     /** @var  VehicleVendor */
     private $dealer;

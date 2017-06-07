@@ -5,10 +5,13 @@ namespace payAndDrive\Controllers;
 use payAndDrive\Models\Clients\Client;
 use payAndDrive\Models\Clients\ClientFactory;
 use payAndDrive\Models\Clients\ClientManager;
+use payAndDrive\Models\Commands\SellCarCommand;
+use payAndDrive\Models\Commands\VendorCommandBus;
 use payAndDrive\Models\Events\EventDispatcher;
+use payAndDrive\Models\Handlers\BasicHandlerLocator;
+use payAndDrive\Models\Maps\CommandHandlerMap;
 use payAndDrive\Models\Vehicles\Vehicle;
 use payAndDrive\Models\Vendors\CarDealership;
-use payAndDrive\Models\Vendors\SellCarCommand;
 use payAndDrive\Models\Vendors\UsedCarVendor;
 use payAndDrive\Models\Vendors\VehicleVendor;
 
@@ -49,18 +52,24 @@ class CarSelectorController
     private function selectCarFromList($dealer)
     {
         $foundCarData = [];
+        $commandBus = new VendorCommandBus(
+            new BasicHandlerLocator(
+                new CommandHandlerMap()
+            )
+        );
         /** @var Vehicle $vehicle */
         foreach ($dealer->getVehicleList() as $vehicle) {
             /** @var Client $client */
             foreach ($this->clientManager->getClients() as $client) {
-                $sellCarCommand = new SellCarCommand($dealer, $client, $vehicle);
                 if ($dealer->checkIfVehicleIsGood($vehicle, $client)) {
                     //maybe should be a static function call instead of this?
-                    $sellCarCommand->execute();
+                    $sellCarCommand = new SellCarCommand($dealer, $client, $vehicle);
+                    $commandBus->dispatch($sellCarCommand);
                     $foundCarData = $dealer->getPurchasedVehicleData();
                 }
             }
         }
+
         return $foundCarData;
     }
 
