@@ -53,9 +53,9 @@ class CarSelectorController
         foreach ($dealer->getVehicleList() as $vehicle) {
             /** @var Client $client */
             foreach ($this->clientManager->getClients() as $client) {
+                $sellCarCommand = new SellCarCommand($dealer, $client, $vehicle);
                 if ($dealer->checkIfVehicleIsGood($vehicle, $client)) {
                     //maybe should be a static function call instead of this?
-                    $sellCarCommand = new SellCarCommand($dealer, $client, $vehicle);
                     $sellCarCommand->execute();
                     $foundCarData = $dealer->getPurchasedVehicleData();
                 }
