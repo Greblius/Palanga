@@ -12,7 +12,7 @@ class VendorCommandBus implements CommandBus
 
     public function __construct(TacticianHandleBox $tactician)
     {
-        $this->locator = $tactician;
+        $this->tactician = $tactician;
     }
 
     /**
