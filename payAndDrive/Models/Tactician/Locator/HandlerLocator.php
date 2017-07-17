@@ -3,9 +3,8 @@
 namespace payAndDrive\Models\Tactician\Locator;
 
 use payAndDrive\Models\Handlers\CommandHandler;
-use payAndDrive\Models\Handlers\HandlerLocatorInterface;
 
-class HandlerLocator implements HandlerLocatorInterface
+class HandlerLocator
 {
     /** @var CommandHandler[] */
     private $handlers = [];

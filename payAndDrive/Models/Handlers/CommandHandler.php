@@ -6,5 +6,5 @@ use payAndDrive\Models\Commands\Command;
 
 interface CommandHandler
 {
-    public function execute(Command $command);
+    public function handle(Command $command);
 }

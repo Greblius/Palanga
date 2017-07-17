@@ -9,6 +9,6 @@ class HandlerInflector
 {
     public function inflect(Command $command, CommandHandler $commandHandler)
     {
-        $commandHandler->execute($command);
+        $commandHandler->handle($command);
     }
 }
