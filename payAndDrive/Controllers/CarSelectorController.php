@@ -9,7 +9,12 @@ use payAndDrive\Models\Commands\SellCarCommand;
 use payAndDrive\Models\Commands\VendorCommandBus;
 use payAndDrive\Models\Events\EventDispatcher;
 use payAndDrive\Models\Handlers\BasicHandlerLocator;
+use payAndDrive\Models\Handlers\SoldCarHandler;
 use payAndDrive\Models\Maps\CommandHandlerMap;
+use payAndDrive\Models\Tactician\Extractor\CommandClassNameExtractor;
+use payAndDrive\Models\Tactician\Inflector\HandlerInflector;
+use payAndDrive\Models\Tactician\Locator\HandlerLocator;
+use payAndDrive\Models\Tactician\TacticianHandleBox;
 use payAndDrive\Models\Vehicles\Vehicle;
 use payAndDrive\Models\Vendors\CarDealership;
 use payAndDrive\Models\Vendors\UsedCarVendor;
@@ -52,11 +57,12 @@ class CarSelectorController
     private function selectCarFromList($dealer)
     {
         $foundCarData = [];
-        $commandBus = new VendorCommandBus(
-            new BasicHandlerLocator(
-                new CommandHandlerMap()
-            )
-        );
+
+        $locator = new HandlerLocator();
+        $locator->addHandler(new SoldCarHandler(), 'SellCarCommand');
+        $tacticianPackage = new TacticianHandleBox(new CommandClassNameExtractor(), $locator, new HandlerInflector());
+        $commandBus = new VendorCommandBus($tacticianPackage);
+
         /** @var Vehicle $vehicle */
         foreach ($dealer->getVehicleList() as $vehicle) {
             /** @var Client $client */

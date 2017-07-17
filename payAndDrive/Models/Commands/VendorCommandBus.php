@@ -3,15 +3,16 @@
 namespace payAndDrive\Models\Commands;
 
 use payAndDrive\Models\Handlers\HandlerLocator;
+use payAndDrive\Models\Tactician\TacticianHandleBox;
 
 class VendorCommandBus implements CommandBus
 {
-    /** @var  HandlerLocator */
-    private $locator;
+    /** @var  TacticianHandleBox */
+    private $tactician;
 
-    public function __construct(HandlerLocator $locator)
+    public function __construct(TacticianHandleBox $tactician)
     {
-        $this->locator = $locator;
+        $this->locator = $tactician;
     }
 
     /**
@@ -19,6 +20,8 @@ class VendorCommandBus implements CommandBus
      */
     public function dispatch(Command $command)
     {
-        $this->locator->getHandler($command)->handle($command);
+        $commandName = $this->tactician->getExtractor()->extract($command);
+        $handler = $this->tactician->getLocator()->getHandlerForCommand($commandName);
+        $this->tactician->getInflector()->inflect($command, $handler);
     }
 }
