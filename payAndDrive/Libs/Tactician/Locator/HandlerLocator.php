@@ -1,6 +1,6 @@
 <?php
 
-namespace payAndDrive\Models\Tactician\Locator;
+namespace payAndDrive\Libs\Tactician\Locator;
 
 use payAndDrive\Models\Handlers\CommandHandler;
 
@@ -10,10 +10,10 @@ class HandlerLocator
     private $handlers = [];
 
     /**
-     * @param CommandHandler $handler
+     * @param $handler
      * @param string $commandClassName
      */
-    public function addHandler(CommandHandler $handler, $commandClassName)
+    public function addHandler($handler, $commandClassName)
     {
         $this->handlers[$commandClassName] = $handler;
     }

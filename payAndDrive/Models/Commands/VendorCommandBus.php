@@ -2,8 +2,7 @@
 
 namespace payAndDrive\Models\Commands;
 
-use payAndDrive\Models\Handlers\HandlerLocator;
-use payAndDrive\Models\Tactician\TacticianHandleBox;
+use payAndDrive\Libs\Tactician\TacticianHandleBox;
 
 class VendorCommandBus implements CommandBus
 {

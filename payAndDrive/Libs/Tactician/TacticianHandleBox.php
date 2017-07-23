@@ -1,10 +1,10 @@
 <?php
 
-namespace payAndDrive\Models\Tactician;
+namespace payAndDrive\Libs\Tactician;
 
-use payAndDrive\Models\Tactician\Extractor\CommandClassNameExtractor;
-use payAndDrive\Models\Tactician\Inflector\HandlerInflector;
-use payAndDrive\Models\Tactician\Locator\HandlerLocator;
+use payAndDrive\Libs\Tactician\Extractor\CommandClassNameExtractor;
+use payAndDrive\Libs\Tactician\Inflector\HandlerInflector;
+use payAndDrive\Libs\Tactician\Locator\HandlerLocator;
 
 class TacticianHandleBox
 {
