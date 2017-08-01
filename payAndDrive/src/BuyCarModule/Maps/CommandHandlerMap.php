@@ -3,6 +3,7 @@
 namespace payAndDrive\src\BuyCarModule\Maps;
 
 use payAndDrive\src\BuyCarModule\Commands\SellCarCommand;
+use payAndDrive\src\BuyCarModule\Handlers\OperationHandler;
 use payAndDrive\src\BuyCarModule\Handlers\SoldCarHandler;
 
 class CommandHandlerMap
@@ -13,7 +14,7 @@ class CommandHandlerMap
     public function __construct()
     {
         $this->handlerMap = [
-            SellCarCommand::class => new SoldCarHandler()
+            SellCarCommand::class => new OperationHandler()
         ];
     }
 

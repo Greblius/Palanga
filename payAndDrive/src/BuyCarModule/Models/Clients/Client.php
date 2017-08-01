@@ -97,11 +97,19 @@ class Client
      * @param $email
      * @param $budget
      */
-    public function __construct($id, $name, $email, $budget)
+    public function __construct($name, $email, $budget)
     {
-        $this->id = $id;
+        $this->id = $this->generateClientId();
         $this->name = $name;
         $this->email = $email;
         $this->budget = $budget;
+    }
+
+    /**
+     * @return int
+     */
+    private function generateClientId()
+    {
+        return rand(0, 99999999);
     }
 }

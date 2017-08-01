@@ -2,17 +2,12 @@
 
 namespace payAndDrive\Controllers;
 
+use payAndDrive\src\BuyCarModule\Controllers\CommandBusTrait;
+use payAndDrive\src\BuyCarModule\Handlers\OperationHandler;
 use payAndDrive\src\BuyCarModule\Models\Clients\Client;
-use payAndDrive\src\BuyCarModule\Models\Clients\ClientFactory;
 use payAndDrive\src\BuyCarModule\Models\Clients\ClientManager;
 use payAndDrive\src\BuyCarModule\Commands\SellCarCommand;
-use payAndDrive\src\BuyCarModule\Commands\VendorCommandBus;
 use payAndDrive\src\BuyCarModule\Events\EventDispatcher;
-use payAndDrive\src\BuyCarModule\Handlers\SoldCarHandler;
-use payAndDrive\Libs\Tactician\Extractor\CommandClassNameExtractor;
-use payAndDrive\Libs\Tactician\Inflector\HandlerInflector;
-use payAndDrive\Libs\Tactician\Locator\HandlerLocator;
-use payAndDrive\Libs\Tactician\TacticianHandleBox;
 use payAndDrive\src\BuyCarModule\Models\Vehicles\Vehicle;
 use payAndDrive\src\BuyCarModule\Models\Vendors\CarDealership;
 use payAndDrive\src\BuyCarModule\Models\Vendors\UsedCarVendor;
@@ -20,6 +15,8 @@ use payAndDrive\src\BuyCarModule\Models\Vendors\VehicleVendor;
 
 class CarSelectorController
 {
+    use CommandBusTrait;
+
     /** @var  ClientManager */
     private $clientManager;
 
@@ -32,7 +29,7 @@ class CarSelectorController
     public function __construct()
     {
         $eventDispatcher = new EventDispatcher();
-        $this->clientManager = $this->getClientManager();
+        $this->clientManager = $this->getClientManager($eventDispatcher);
         $this->newCarsDealer = new CarDealership($eventDispatcher);
         $this->usedCarVendor = new UsedCarVendor($eventDispatcher);
     }
@@ -56,10 +53,8 @@ class CarSelectorController
     {
         $foundCarData = [];
 
-        $locator = new HandlerLocator();
-        $locator->addHandler(new SoldCarHandler(), 'SellCarCommand');
-        $tacticianPackage = new TacticianHandleBox(new CommandClassNameExtractor(), $locator, new HandlerInflector());
-        $commandBus = new VendorCommandBus($tacticianPackage);
+        $this->addNewHandlerForCommandBus(new OperationHandler(), 'SellCarCommand');
+        $commandBus = $this->getCommandBus();
 
         /** @var Vehicle $vehicle */
         foreach ($dealer->getVehicleList() as $vehicle) {
@@ -76,18 +71,13 @@ class CarSelectorController
     }
 
     /**
+     * @param EventDispatcher $eventDispatcher
      * @return ClientManager
      */
-    private function getClientManager()
+    private function getClientManager(EventDispatcher $eventDispatcher)
     {
-        $clientCollection = new ClientManager();
-
-        $clientJonas = ClientFactory::create('1', 'Jonas', 'jonas@gmail.com', 70000, 0, false, false);
-        $clientPetras = ClientFactory::create('2', 'Petras', 'jonas@gmail.com', 10000, 100000, true, true);
-
-        $clientCollection->addClient($clientJonas);
-        $clientCollection->addClient($clientPetras);
-
+        $clientCollection = new ClientManager($eventDispatcher);
+        $clientCollection->loadClients();
         return $clientCollection;
     }
 }

@@ -4,7 +4,7 @@ namespace payAndDrive\src\BuyCarModule\Handlers;
 
 use payAndDrive\src\BuyCarModule\Commands\Command;
 
-class SoldCarHandler implements CommandHandler
+class OperationHandler implements CommandHandler
 {
     public function handle(Command $command)
     {

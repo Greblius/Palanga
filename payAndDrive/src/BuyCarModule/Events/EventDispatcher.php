@@ -20,4 +20,12 @@ class EventDispatcher
             ''
         );
     }
+
+    /**
+     * @param NewClientEvent $event
+     */
+    public function greetNewClient(NewClientEvent $event)
+    {
+        mail($event->getClientEmail(), 'Hello '. $event->getClientName() .', Thank you for joining best PEREKUP website!', '');
+    }
 }
