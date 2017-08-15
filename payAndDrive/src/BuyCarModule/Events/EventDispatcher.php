@@ -28,4 +28,12 @@ class EventDispatcher
     {
         mail($event->getClientEmail(), 'Hello '. $event->getClientName() .', Thank you for joining best PEREKUP website!', '');
     }
+
+    /**
+     * @param NewVehicleEvent $event
+     */
+    public function informVendorAboutNewVehicle(NewVehicleEvent $event)
+    {
+        mail($event->getVendorEmail(), 'New car arrived to garage: ' . $event->getVehicle()->getBrand() . ' sold for: ' . $event->getVehicle()->getPrice(), '');
+    }
 }

@@ -21,4 +21,12 @@ class UsedCarVendor extends VehicleVendor
 
         $this->vehicles = [$audi, $porsche, $waterScooter];
     }
+
+    /**
+     * @return string
+     */
+    public function getVendorEmail()
+    {
+        return 'perekupas@gmail.com';
+    }
 }

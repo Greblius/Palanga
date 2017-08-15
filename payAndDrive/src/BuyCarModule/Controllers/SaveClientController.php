@@ -20,6 +20,9 @@ class SaveClientController
         $this->clientManager = new ClientManager(new EventDispatcher());
     }
 
+    /**
+     * @param array $clientData
+     */
     public function createClient($clientData)
     {
         $this->addNewHandlerForCommandBus(new OperationHandler(), 'CreateClientCommand');

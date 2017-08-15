@@ -2,8 +2,8 @@
 
 namespace payAndDrive\src\BuyCarModule\Models\Vendors;
 
+use payAndDrive\src\BuyCarModule\Events\NewVehicleEvent;
 use payAndDrive\src\BuyCarModule\Models\Clients\Client;
-use payAndDrive\src\BuyCarModule\Events\ClientBoughtCarEvent;
 use payAndDrive\src\BuyCarModule\Events\EventDispatcher;
 use payAndDrive\src\BuyCarModule\Events\SoldCarEvent;
 use payAndDrive\src\BuyCarModule\Models\Vehicles\Vehicle;
@@ -89,5 +89,19 @@ abstract class VehicleVendor
         $this->purchasedVehicle = $vehicle;
         $event = new SoldCarEvent($vehicle->getBrand(), $vehicle->getPrice(), $client->getEmail(), $client->getName());
         $this->eventDispatcher->dispatch('informClientAboutNewCar', $event);
+    }
+
+    /**
+     * @return string
+     */
+    public function getVendorEmail()
+    {
+        return '';
+    }
+
+    public function saveNewVehicle(Vehicle $vehicle)
+    {
+        $event = new NewVehicleEvent($vehicle, $this->getVendorEmail());
+        $this->eventDispatcher->dispatch('informVendorAboutNewVehicle', $event);
     }
 }

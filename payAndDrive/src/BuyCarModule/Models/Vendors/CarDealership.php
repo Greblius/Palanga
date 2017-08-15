@@ -30,4 +30,12 @@ class CarDealership extends VehicleVendor
     {
         return $this->cars;
     }
+
+    /**
+     * @return string
+     */
+    public function getVendorEmail()
+    {
+        return 'naujos_masinos@brangu.lt';
+    }
 }
